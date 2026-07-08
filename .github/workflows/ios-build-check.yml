@@ -49,7 +49,9 @@ jobs:
             -authenticationKeyIssuerID ${APPSTORE_ISSUER_ID} \
             DEVELOPMENT_TEAM=4YX785HWJD \
             CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
+
 
 
       - name: exportOptions.plistを作成
