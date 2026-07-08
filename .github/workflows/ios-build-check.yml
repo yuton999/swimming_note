@@ -47,7 +47,10 @@ jobs:
             -authenticationKeyPath ~/private_keys/AuthKey_${APPSTORE_KEY_ID}.p8 \
             -authenticationKeyID ${APPSTORE_KEY_ID} \
             -authenticationKeyIssuerID ${APPSTORE_ISSUER_ID} \
+            DEVELOPMENT_TEAM=4YX785HWJD \
+            CODE_SIGN_STYLE=Automatic \
             archive
+
 
       - name: exportOptions.plistを作成
         run: |
