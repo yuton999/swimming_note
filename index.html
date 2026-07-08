@@ -26,6 +26,42 @@ body{
 .screen{display:none;}
 .screen.active{display:flex;flex-direction:column;min-height:100vh;}
 
+.day-sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:60vh;
+  max-height:92vh;
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -6px 24px rgba(20,30,50,0.16);
+  display:flex;
+  flex-direction:column;
+  transform:translateY(105%);
+  transition:transform .3s cubic-bezier(.32,.72,0,1), height .28s cubic-bezier(.32,.72,0,1);
+  z-index:30;
+  overflow:hidden;
+}
+.day-sheet.open{transform:translateY(0);}
+.day-sheet.dragging{transition:none;}
+.day-sheet-handle-area{
+  flex-shrink:0;
+  padding:8px 0 4px;
+  cursor:grab;
+  touch-action:none;
+}
+.day-sheet-handle{
+  width:36px;
+  height:4px;
+  border-radius:2px;
+  background:var(--border);
+  margin:0 auto;
+  flex-shrink:0;
+}
+.day-sheet .topbar{position:static;}
+.day-sheet .day-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
 /* ---- Top bar ---- */
 .topbar{
   display:flex;
@@ -648,14 +684,17 @@ input:focus, select:focus{
   <div class="cal-grid" id="calGrid"></div>
 </div>
 
-<!-- ============ 画面2: 日詳細 ============ -->
-<div class="screen" id="screen-day">
+<!-- ============ 日詳細ボトムシート ============ -->
+<div class="day-sheet" id="daySheet">
+  <div class="day-sheet-handle-area" id="daySheetHandle">
+    <div class="day-sheet-handle"></div>
+  </div>
   <div class="topbar">
-    <button class="icon-btn" id="dayBackBtn" aria-label="戻る">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <h1 class="title" id="dayTitle"></h1>
     <div class="topbar-spacer"></div>
+    <h1 class="title" id="dayTitle"></h1>
+    <button class="icon-btn" id="dayBackBtn" aria-label="閉じる">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
   </div>
   <div class="day-content" id="dayContent"></div>
 </div>
@@ -921,10 +960,94 @@ function formatDateTitle(key){
   return `${m}月${d}日(${wd})`;
 }
 
+function openDaySheet(){
+  document.getElementById('daySheet').classList.add('open');
+}
+function closeDaySheet(){
+  document.getElementById('daySheet').classList.remove('open');
+}
+
+/* ---- ボトムシート: ドラッグでリサイズ ---- */
+const DAY_SHEET_SNAPS = [0.32, 0.6, 0.92]; // 画面高さに対する割合(小・中・大)
+const DAY_SHEET_DEFAULT_SNAP = 1; // 開いた時のデフォルト(中)
+const DAY_SHEET_DISMISS_RATIO = 0.18; // これより下に離したら閉じる
+
+function setDaySheetHeight(px, animate){
+  const sheet = document.getElementById('daySheet');
+  if(!animate) sheet.classList.add('dragging');
+  sheet.style.height = px + 'px';
+  if(!animate){
+    // force reflow so the next height change (if any) can transition again
+    void sheet.offsetHeight;
+    sheet.classList.remove('dragging');
+  }
+}
+
+function snapDaySheetTo(index){
+  const h = window.innerHeight * DAY_SHEET_SNAPS[index];
+  const sheet = document.getElementById('daySheet');
+  sheet.classList.remove('dragging');
+  sheet.style.height = h + 'px';
+}
+
+(function initDaySheetDrag(){
+  const handle = document.getElementById('daySheetHandle');
+  const sheet = document.getElementById('daySheet');
+  let startY = 0;
+  let startHeight = 0;
+  let dragging = false;
+
+  function onPointerDown(e){
+    dragging = true;
+    startY = e.clientY;
+    startHeight = sheet.getBoundingClientRect().height;
+    sheet.classList.add('dragging');
+    handle.setPointerCapture(e.pointerId);
+  }
+  function onPointerMove(e){
+    if(!dragging) return;
+    const deltaY = startY - e.clientY;
+    let newHeight = startHeight + deltaY;
+    const maxH = window.innerHeight * 0.94;
+    const minH = 60; // rubber-band floor while dragging
+    if(newHeight > maxH) newHeight = maxH + (newHeight - maxH) * 0.2;
+    if(newHeight < minH) newHeight = minH;
+    sheet.style.height = newHeight + 'px';
+  }
+  function onPointerUp(e){
+    if(!dragging) return;
+    dragging = false;
+    sheet.classList.remove('dragging');
+    const currentHeight = sheet.getBoundingClientRect().height;
+    const ratio = currentHeight / window.innerHeight;
+
+    if(ratio < DAY_SHEET_DISMISS_RATIO){
+      closeDaySheet();
+      // reset to default height for next time, after the close transition starts
+      setTimeout(()=> snapDaySheetTo(DAY_SHEET_DEFAULT_SNAP), 300);
+      return;
+    }
+    // snap to nearest of the 3 preset heights
+    let closestIdx = 0;
+    let closestDist = Infinity;
+    DAY_SHEET_SNAPS.forEach((frac, i)=>{
+      const dist = Math.abs(ratio - frac);
+      if(dist < closestDist){ closestDist = dist; closestIdx = i; }
+    });
+    snapDaySheetTo(closestIdx);
+  }
+
+  handle.addEventListener('pointerdown', onPointerDown);
+  handle.addEventListener('pointermove', onPointerMove);
+  handle.addEventListener('pointerup', onPointerUp);
+  handle.addEventListener('pointercancel', onPointerUp);
+})();
+
 async function openDay(key){
   selectedDate = key;
   document.getElementById('dayTitle').textContent = formatDateTitle(key);
-  switchScreen('day');
+  snapDaySheetTo(DAY_SHEET_DEFAULT_SNAP);
+  openDaySheet();
   await renderDayScreen();
 }
 
@@ -1007,8 +1130,7 @@ async function renderDayScreen(){
 }
 
 document.getElementById('dayBackBtn').addEventListener('click', ()=>{
-  switchScreen('calendar');
-  renderCalendar();
+  closeDaySheet();
 });
 
 /* ==================================================
@@ -1180,6 +1302,7 @@ function parseStoredData(raw){
 }
 
 async function openEdit(){
+  closeDaySheet();
   document.getElementById('editTitle').textContent = formatDateTitle(selectedDate);
   buildRows();
   let rows = null;
@@ -1205,8 +1328,8 @@ async function openEdit(){
 }
 
 document.getElementById('editBackBtn').addEventListener('click', ()=>{
-  switchScreen('day');
-  renderDayScreen();
+  switchScreen('calendar');
+  openDay(selectedDate);
 });
 
 document.getElementById('saveBtn').addEventListener('click', async ()=>{
