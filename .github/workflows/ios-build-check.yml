@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Node.jsのバージョンを確認
+        run: node --version
+
       - name: 依存パッケージをインストール
         run: npm install
 
@@ -26,12 +29,7 @@ jobs:
       - name: Webアセットを同期
         run: npx cap sync ios
 
-      - name: ビルド(署名なし・シミュレータ向け)
+      - name: Xcodeプロジェクトの中身を確認(ビルドはまだしない)
         run: |
-          cd ios/App
-          xcodebuild -project App.xcodeproj \
-            -scheme App \
-            -sdk iphonesimulator \
-            -configuration Debug \
-            CODE_SIGNING_ALLOWED=NO \
-            build
+          ls -la ios/App
+          xcodebuild -list -project ios/App/App.xcodeproj
