@@ -1,4 +1,4 @@
-name: iOS Build & Upload to TestFlight
+ name: iOS Build & Upload to TestFlight
 
 on:
   workflow_dispatch:
@@ -36,7 +36,9 @@ jobs:
           ls -la $RUNNER_TEMP/debug.p12
           echo "デコード後のsha256:"
           shasum -a 256 $RUNNER_TEMP/debug.p12
-          echo "期待するsha256: fb7551c07a983e4f8012c579b8e02e390006fea5e0efa4c68dd335e75444c92a"
+          echo "期待するsha256(新しいlegacy形式): 75c11efbdad0052f16bc74851f91fa08533c5e7d201dc2b5221715bd8201f3bf"
+          echo "---実際の暗号化方式(ここが一番大事)---"
+          openssl pkcs12 -in $RUNNER_TEMP/debug.p12 -passin pass:"$APPSTORE_P12_PASSWORD" -info -noout 2>&1 || true
 
       - name: 証明書をキーチェーンに読み込む
         env:
