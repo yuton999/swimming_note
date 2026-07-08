@@ -93,7 +93,7 @@ jobs:
             <string>manual</string>
             <key>provisioningProfiles</key>
             <dict>
-              <key>com.yuton999.swimmingnote</key>
+              <key>yuton999</key>
               <string>swimming_note</string>
             </dict>
           </dict>
