@@ -98,6 +98,15 @@ body{
   cursor:pointer;
   padding:4px 10px;
 }
+.month-total{
+  text-align:center;
+  font-size:12.5px;
+  color:var(--muted);
+  font-weight:600;
+  padding-bottom:4px;
+  min-height:16px;
+}
+.month-total .val{color:var(--navy);font-weight:800;}
 .cal-weekdays{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -192,6 +201,41 @@ body{
 }
 .day-row .main{font-weight:600;}
 .day-row .sub{color:var(--muted);font-size:12.5px;margin-top:2px;}
+.day-rating-view{
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.rating-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:12px;
+  font-weight:700;
+  padding:5px 12px;
+  border-radius:14px;
+}
+.rating-pill-emoji{font-size:17px;}
+.day-memo-view{
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+}
+.day-memo-view-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  margin-bottom:6px;
+}
+.day-memo-view-text{
+  font-size:13.5px;
+  color:var(--text);
+  line-height:1.6;
+  white-space:pre-wrap;
+}
 .day-edit-btn-wrap{
   width:100%;
   max-width:420px;
@@ -205,6 +249,92 @@ body{
   overflow-x:auto;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+}
+.day-rating-section{
+  padding:12px 14px 4px;
+  border-top:1px solid var(--border);
+}
+.rating-group{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+}
+.rating-label{
+  font-size:12.5px;
+  color:var(--muted);
+  font-weight:600;
+  width:92px;
+  flex-shrink:0;
+  line-height:1.4;
+  white-space:nowrap;
+}
+.rating-sublabel{
+  display:block;
+  font-size:10.5px;
+  color:var(--muted);
+  font-weight:500;
+}
+.rating-col{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.rating-scale-labels{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  color:var(--muted);
+  padding:0 3px;
+}
+.rating-buttons{
+  display:flex;
+  gap:6px;
+}
+.rating-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1.5px solid var(--border);
+  background:#fff;
+  font-size:19px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  cursor:pointer;
+}
+.rating-btn.active{
+  background:var(--blue-soft);
+  border-color:var(--blue);
+  box-shadow:0 0 0 1.5px var(--blue);
+}
+.day-memo-section{
+  padding:12px 14px;
+  border-top:1px solid var(--border);
+}
+.day-memo-label{
+  display:block;
+  font-size:12.5px;
+  color:var(--muted);
+  margin-bottom:6px;
+  font-weight:600;
+}
+.day-memo-input{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:14px;
+  font-family:inherit;
+  color:var(--text);
+  resize:vertical;
+}
+.day-memo-input:focus{
+  outline:none;
+  border-color:var(--navy);
 }
 table{
   border-collapse:collapse;
@@ -511,6 +641,7 @@ input:focus, select:focus{
     <span class="month-label" id="monthLabel"></span>
     <button class="cal-arrow" id="nextMonthBtn">›</button>
   </div>
+  <div class="month-total" id="monthTotal"></div>
   <div class="cal-weekdays">
     <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
   </div>
@@ -559,6 +690,38 @@ input:focus, select:focus{
     </table>
   </div>
 
+  <div class="day-rating-section">
+    <div class="rating-group">
+      <div class="rating-label">コンディション<span class="rating-sublabel">練習前</span></div>
+      <div class="rating-col">
+        <div class="rating-buttons" id="conditionRating">
+          <button type="button" class="rating-btn" data-value="1" title="不調">😞</button>
+          <button type="button" class="rating-btn" data-value="2" title="やや不調">😕</button>
+          <button type="button" class="rating-btn" data-value="3" title="普通">😐</button>
+          <button type="button" class="rating-btn" data-value="4" title="良い">🙂</button>
+          <button type="button" class="rating-btn" data-value="5" title="絶好調">😄</button>
+        </div>
+      </div>
+    </div>
+    <div class="rating-group">
+      <div class="rating-label">疲労感<span class="rating-sublabel">練習後</span></div>
+      <div class="rating-col">
+        <div class="rating-buttons" id="effortRating">
+          <button type="button" class="rating-btn" data-value="1" title="楽">😞</button>
+          <button type="button" class="rating-btn" data-value="2" title="やや楽">😕</button>
+          <button type="button" class="rating-btn" data-value="3" title="普通">😐</button>
+          <button type="button" class="rating-btn" data-value="4" title="ややきつい">🙂</button>
+          <button type="button" class="rating-btn" data-value="5" title="きつい">😄</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-memo-section">
+    <label class="day-memo-label" for="dayMemoInput">メモ</label>
+    <textarea id="dayMemoInput" class="day-memo-input" rows="4" placeholder="今日の練習でどう感じたか、気づいたことなど"></textarea>
+  </div>
+
   <div class="footer-bar">
     <div class="total">
       <span class="total-label">合計距離</span>
@@ -603,6 +766,14 @@ function switchScreen(name){
   document.getElementById('screen-'+name).classList.add('active');
   window.scrollTo(0,0);
 }
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
+}
+
 function pad2(n){ return String(n).padStart(2,'0'); }
 function dateKey(y,m,d){ return `${y}-${pad2(m+1)}-${pad2(d)}`; }
 function todayKey(){
@@ -667,7 +838,37 @@ async function loadFilledDates(){
   }catch(e){ /* no data yet */ }
 }
 
-function renderCalendar(){
+function calcDayTotal(rows){
+  if(!rows) return 0;
+  let total = 0;
+  rows.forEach(r=>{
+    const distance = parseFloat(r.distance) || 0;
+    if(distance <= 0) return;
+    const reps = parseFloat(r.reps) || 1;
+    const sets = parseFloat(r.sets) || 1;
+    total += distance*reps*sets;
+  });
+  return total;
+}
+
+async function calcMonthTotal(year, month){
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  let total = 0;
+  for(let d=1; d<=daysInMonth; d++){
+    const key = dateKey(year, month, d);
+    if(!filledDates.has(key)) continue;
+    try{
+      const res = await window.storage.get('sheet:'+key);
+      if(res && res.value){
+        const data = parseStoredData(res.value);
+        total += calcDayTotal(data.rows);
+      }
+    }catch(e){ /* skip */ }
+  }
+  return total;
+}
+
+async function renderCalendar(){
   document.getElementById('monthLabel').textContent = `${calYear}年${calMonth+1}月`;
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
@@ -687,6 +888,14 @@ function renderCalendar(){
     cell.innerHTML = `<span>${d}</span>` + (filledDates.has(key) ? '<span class="dot"></span>' : '');
     cell.addEventListener('click', ()=> openDay(key));
     grid.appendChild(cell);
+  }
+
+  const monthTotalEl = document.getElementById('monthTotal');
+  monthTotalEl.textContent = '';
+  const thisYear = calYear, thisMonth = calMonth;
+  const total = await calcMonthTotal(thisYear, thisMonth);
+  if(thisYear === calYear && thisMonth === calMonth){
+    monthTotalEl.innerHTML = total > 0 ? `月間合計 <span class="val">${total.toLocaleString('ja-JP')}</span> m` : '';
   }
 }
 
@@ -723,12 +932,24 @@ async function renderDayScreen(){
   const content = document.getElementById('dayContent');
   content.innerHTML = '<div class="day-status">読み込み中...</div>';
   let rows = null;
+  let memo = '';
+  let condition = '';
+  let effort = '';
   try{
     const res = await window.storage.get('sheet:'+selectedDate);
-    if(res && res.value) rows = JSON.parse(res.value);
+    if(res && res.value){
+      const data = parseStoredData(res.value);
+      rows = data.rows;
+      memo = data.memo;
+      condition = data.condition;
+      effort = data.effort;
+    }
   }catch(e){ rows = null; }
 
-  const hasContent = rows && rows.some(r => Object.values(r).some(v => v !== '' && v != null));
+  const hasRows = rows && rows.some(r => Object.values(r).some(v => v !== '' && v != null));
+  const hasMemo = memo && memo.trim() !== '';
+  const hasRating = condition !== '' || effort !== '';
+  const hasContent = hasRows || hasMemo || hasRating;
 
   if(!hasContent){
     content.innerHTML = `
@@ -736,7 +957,7 @@ async function renderDayScreen(){
       <button class="day-edit-btn" id="dayEditBtn">編集</button>`;
   } else {
     let total = 0;
-    const rowsHtml = rows.filter(r => Object.values(r).some(v => v !== '' && v != null)).map(r=>{
+    const rowsHtml = hasRows ? rows.filter(r => Object.values(r).some(v => v !== '' && v != null)).map(r=>{
       const distance = parseFloat(r.distance) || 0;
       const reps = parseFloat(r.reps) || 1;
       const sets = parseFloat(r.sets) || 1;
@@ -757,12 +978,26 @@ async function renderDayScreen(){
         <div class="main">${mainParts.join(' ') || '(未設定)'}</div>
         ${subParts.length ? `<div class="sub">${subParts.join(' ')}</div>` : ''}
       </div>`;
-    }).join('');
+    }).join('') : '';
+
+    const ratingHtml = hasRating ? `
+      <div class="day-rating-view">
+        ${condition ? `<span class="rating-pill">コンディション <span class="rating-pill-emoji">${CONDITION_EMOJI[condition] || ''}</span></span>` : ''}
+        ${effort ? `<span class="rating-pill">疲労感 <span class="rating-pill-emoji">${EFFORT_EMOJI[effort] || ''}</span></span>` : ''}
+      </div>` : '';
+
+    const memoHtml = hasMemo ? `
+      <div class="day-memo-view">
+        <div class="day-memo-view-label">メモ</div>
+        <div class="day-memo-view-text">${escapeHtml(memo)}</div>
+      </div>` : '';
 
     content.innerHTML = `
       <div class="day-summary">
         <div class="day-summary-total"><span class="n">${total.toLocaleString('ja-JP')}</span><span class="u">m</span></div>
         ${rowsHtml}
+        ${ratingHtml}
+        ${memoHtml}
       </div>
       <div class="day-edit-btn-wrap">
         <button class="day-edit-btn" id="dayEditBtn">編集</button>
@@ -799,6 +1034,11 @@ const STROKE_LABELS = {
   mix: 'ミックス',
   cho: 'cho'
 };
+
+const CONDITION_LABELS = { 1: '不調', 2: 'やや不調', 3: '普通', 4: '良い', 5: '絶好調' };
+const EFFORT_LABELS = { 1: '楽', 2: 'やや楽', 3: '普通', 4: 'ややきつい', 5: 'きつい' };
+const CONDITION_EMOJI = { 1: '😞', 2: '😕', 3: '😐', 4: '🙂', 5: '😄' };
+const EFFORT_EMOJI = { 1: '😞', 2: '😕', 3: '😐', 4: '🙂', 5: '😄' };
 
 function distanceOptions(){
   const opts = ['', '25', '50', '75', '100'];
@@ -902,6 +1142,25 @@ function updateTotal(){
   document.getElementById('totalValue').textContent = total.toLocaleString('ja-JP');
 }
 
+function setRating(groupId, value){
+  document.querySelectorAll('#'+groupId+' .rating-btn').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.value === String(value));
+  });
+}
+function getRating(groupId){
+  const active = document.querySelector('#'+groupId+' .rating-btn.active');
+  return active ? active.dataset.value : '';
+}
+document.querySelectorAll('.rating-buttons').forEach(group=>{
+  group.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.rating-btn');
+    if(!btn) return;
+    const wasActive = btn.classList.contains('active');
+    group.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+    if(!wasActive) btn.classList.add('active');
+  });
+});
+
 document.getElementById('tbody').addEventListener('input', updateTotal);
 document.getElementById('tbody').addEventListener('change', updateTotal);
 
@@ -914,16 +1173,34 @@ document.getElementById('tbody').addEventListener('click', (e)=>{
   updateTotal();
 });
 
+function parseStoredData(raw){
+  const parsed = JSON.parse(raw);
+  if(Array.isArray(parsed)) return { rows: parsed, memo: '', condition: '', effort: '' };
+  return { rows: parsed.rows || [], memo: parsed.memo || '', condition: parsed.condition || '', effort: parsed.effort || '' };
+}
+
 async function openEdit(){
   document.getElementById('editTitle').textContent = formatDateTitle(selectedDate);
   buildRows();
   let rows = null;
+  let memo = '';
+  let condition = '';
+  let effort = '';
   try{
     const res = await window.storage.get('sheet:'+selectedDate);
-    if(res && res.value) rows = JSON.parse(res.value);
+    if(res && res.value){
+      const data = parseStoredData(res.value);
+      rows = data.rows;
+      memo = data.memo;
+      condition = data.condition;
+      effort = data.effort;
+    }
   }catch(e){ rows = null; }
   if(rows) applyRows(rows);
   else updateTotal();
+  document.getElementById('dayMemoInput').value = memo;
+  setRating('conditionRating', condition);
+  setRating('effortRating', effort);
   switchScreen('edit');
 }
 
@@ -934,16 +1211,19 @@ document.getElementById('editBackBtn').addEventListener('click', ()=>{
 
 document.getElementById('saveBtn').addEventListener('click', async ()=>{
   const rows = collectRows();
+  const memo = document.getElementById('dayMemoInput').value;
+  const condition = getRating('conditionRating');
+  const effort = getRating('effortRating');
   if(!window.storage){
     showToast('storage機能が利用できません');
     return;
   }
-  const payload = JSON.stringify(rows);
+  const payload = JSON.stringify({ rows, memo, condition, effort });
   let lastError = null;
   for(let attempt = 0; attempt < 2; attempt++){
     try{
       await window.storage.set('sheet:'+selectedDate, payload);
-      const hasContent = rows.some(r => Object.values(r).some(v => v !== '' && v != null));
+      const hasContent = rows.some(r => Object.values(r).some(v => v !== '' && v != null)) || memo.trim() !== '' || condition !== '' || effort !== '';
       if(hasContent) filledDates.add(selectedDate);
       else filledDates.delete(selectedDate);
       showToast('保存しました');
@@ -962,6 +1242,9 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
 document.getElementById('resetBtn').addEventListener('click', ()=>{
   document.querySelectorAll('#tbody input').forEach(inp => inp.value = '');
   document.querySelectorAll('#tbody select').forEach(sel => sel.value = '');
+  document.getElementById('dayMemoInput').value = '';
+  setRating('conditionRating', '');
+  setRating('effortRating', '');
   updateTotal();
   showToast('入力をクリアしました');
 });
