@@ -24,6 +24,21 @@ jobs:
       - name: Webアセットを同期
         run: npx cap sync ios
 
+      - name: 不要なコードを無効化(Universal Links機能)
+        run: |
+          cd ios/App/App
+          python3 -c "
+          import re
+          with open('AppDelegate.swift') as f:
+              content = f.read()
+          pattern = r'func application\(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping \(\[UIUserActivityRestoring\]\?\) -> Void\) -> Bool \{.*?\n    \}'
+          replacement = 'func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {\n        return false\n    }'
+          content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+          with open('AppDelegate.swift', 'w') as f:
+              f.write(content)
+          "
+          cat AppDelegate.swift
+
       - name: 【デバッグ】証明書データの中身を確認
         env:
           APPSTORE_P12_BASE64: ${{ secrets.APPSTORE_P12_BASE64 }}
