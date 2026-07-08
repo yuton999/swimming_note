@@ -123,16 +123,20 @@ jobs:
             -exportPath $RUNNER_TEMP/export \
             -exportOptionsPlist $RUNNER_TEMP/exportOptions.plist
 
-      - name: TestFlightへアップロード
+            - name: TestFlightへアップロード
         env:
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           APPSTORE_PRIVATE_KEY: ${{ secrets.APPSTORE_PRIVATE_KEY }}
         run: |
+          echo "KEY_ID文字数: ${#APPSTORE_KEY_ID}"
+          echo "ISSUER_ID文字数: ${#APPSTORE_ISSUER_ID}"
+          echo "PRIVATE_KEY文字数: ${#APPSTORE_PRIVATE_KEY}"
           mkdir -p ~/private_keys
           echo "$APPSTORE_PRIVATE_KEY" > ~/private_keys/AuthKey_${APPSTORE_KEY_ID}.p8
+          ls -la ~/private_keys/
           xcrun altool --upload-app \
             -f $RUNNER_TEMP/export/*.ipa \
             -t ios \
-            --apiKey ${APPSTORE_KEY_ID} \
-            --apiIssuer ${APPSTORE_ISSUER_ID}
+            --apiKey "${APPSTORE_KEY_ID}" \
+            --apiIssuer "${APPSTORE_ISSUER_ID}"
