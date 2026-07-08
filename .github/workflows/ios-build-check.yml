@@ -24,6 +24,20 @@ jobs:
       - name: Webアセットを同期
         run: npx cap sync ios
 
+      - name: 【デバッグ】証明書データの中身を確認
+        env:
+          APPSTORE_P12_BASE64: ${{ secrets.APPSTORE_P12_BASE64 }}
+          APPSTORE_P12_PASSWORD: ${{ secrets.APPSTORE_P12_PASSWORD }}
+        run: |
+          echo "base64文字数(改行含む): ${#APPSTORE_P12_BASE64}"
+          echo "パスワード文字数: ${#APPSTORE_P12_PASSWORD}"
+          echo "$APPSTORE_P12_BASE64" | base64 --decode > $RUNNER_TEMP/debug.p12
+          echo "デコード後のファイルサイズ:"
+          ls -la $RUNNER_TEMP/debug.p12
+          echo "デコード後のsha256:"
+          shasum -a 256 $RUNNER_TEMP/debug.p12
+          echo "期待するsha256: fb7551c07a983e4f8012c579b8e02e390006fea5e0efa4c68dd335e75444c92a"
+
       - name: 証明書をキーチェーンに読み込む
         env:
           APPSTORE_P12_BASE64: ${{ secrets.APPSTORE_P12_BASE64 }}
