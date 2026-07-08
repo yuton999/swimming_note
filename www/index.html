@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>my swimming note</title>
 <style>
 :root{
@@ -70,7 +70,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:14px 14px;
+  padding:calc(14px + env(safe-area-inset-top)) 14px 14px;
   border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
