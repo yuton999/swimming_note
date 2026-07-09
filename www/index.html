@@ -385,6 +385,122 @@ body{
   color:var(--blue);
   border:1.5px solid var(--blue);
 }
+.timecalc-intro{
+  padding:14px 16px 4px;
+  font-size:12.5px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.timecalc-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 16px 14px;
+}
+.timecalc-label{
+  font-size:12.5px;
+  color:var(--muted);
+  font-weight:600;
+}
+.timecalc-select{
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:6px 10px;
+  font-size:14px;
+  color:var(--text);
+  background:#fff;
+}
+.timecalc-clear-btn{
+  margin-left:auto;
+  background:none;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--muted);
+  cursor:pointer;
+}
+.timecalc-clear-btn:active{opacity:.7;}
+.timecalc-table-scroll{flex:1;padding-bottom:env(safe-area-inset-bottom);}
+.timecalc-table-scroll .col-dist{
+  font-size:13.5px;
+  color:var(--text);
+  padding-left:8px;
+}
+td.timecalc-dist{
+  font-size:12px;
+  color:var(--text);
+  padding-left:4px;
+}
+.timecalc-split-value{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  padding-left:4px;
+}
+tr[data-index]{cursor:pointer;}
+tr[data-index]:active{background:var(--blue-soft);}
+.timecalc-current{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  padding:10px 16px;
+  background:var(--blue-soft);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.timecalc-current-label{
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--blue);
+}
+.timecalc-current-value{
+  font-size:24px;
+  font-weight:800;
+  color:var(--navy);
+  font-variant-numeric:tabular-nums;
+}
+.timecalc-keypad{
+  border-bottom:1px solid var(--border);
+  padding:8px 10px;
+  background:#fafbfc;
+  flex-shrink:0;
+}
+.keypad-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:8px;
+}
+.keypad-row:last-child{margin-bottom:0;}
+.keypad-btn{
+  flex:1;
+  height:48px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  font-size:19px;
+  font-weight:600;
+  color:var(--navy);
+  cursor:pointer;
+}
+.keypad-btn:active{background:var(--blue-soft);}
+.keypad-btn-func{
+  font-size:14px;
+  color:var(--blue);
+  font-weight:700;
+}
+.keypad-btn-primary{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.keypad-btn-primary:active{background:var(--navy);}
+.timecalc-lap-value{
+  font-size:12px;
+  font-weight:700;
+  color:var(--navy);
+  padding-left:4px;
+}
 .day-memo-section{
   padding:12px 14px;
   border-top:1px solid var(--border);
@@ -415,6 +531,9 @@ table{
   border-collapse:collapse;
   width:100%;
   min-width:796px;
+}
+.timecalc-table-scroll table{
+  min-width:0;
 }
 thead th{
   position:sticky;
@@ -707,7 +826,9 @@ input:focus, select:focus{
 <!-- ============ 画面1: カレンダー ============ -->
 <div class="screen active" id="screen-calendar">
   <div class="topbar">
-    <div class="topbar-spacer"></div>
+    <button class="icon-btn" id="timeCalcOpenBtn" aria-label="タイム換算">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l3 2M9 2h6M12 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <h1 class="title">my swimming note</h1>
     <button class="icon-btn" id="backupOpenBtn" aria-label="データのバックアップ">
       <svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 12l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -748,6 +869,75 @@ input:focus, select:focus{
     </div>
   </div>
 </div>
+
+
+<!-- ============ 画面5: タイム換算(SPLIT→LAP) ============ -->
+<div class="screen" id="screen-timecalc">
+  <div class="topbar">
+    <button class="icon-btn" id="timeCalcBackBtn" aria-label="戻る">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <h1 class="title">タイム換算</h1>
+    <div class="topbar-spacer"></div>
+  </div>
+
+  <div class="timecalc-intro">SPLIT(経過時間)を入力すると、LAP(区間タイム)を自動計算します。</div>
+
+  <div class="timecalc-controls">
+    <label class="timecalc-label">距離間隔</label>
+    <select id="timeCalcInterval" class="timecalc-select">
+      <option value="25" selected>25m</option>
+      <option value="50">50m</option>
+      <option value="100">100m</option>
+      <option value="200">200m</option>
+    </select>
+    <button class="timecalc-clear-btn" id="timeCalcClearBtn">クリア</button>
+  </div>
+
+  <div class="timecalc-current">
+    <span class="timecalc-current-label" id="timeCalcCurrentLabel">1 ・ 50m</span>
+    <span class="timecalc-current-value" id="timeCalcCurrentValue">0:00.00</span>
+  </div>
+
+  <div class="timecalc-keypad" id="timeCalcKeypad">
+    <div class="keypad-row">
+      <button class="keypad-btn" data-digit="1">1</button>
+      <button class="keypad-btn" data-digit="2">2</button>
+      <button class="keypad-btn" data-digit="3">3</button>
+    </div>
+    <div class="keypad-row">
+      <button class="keypad-btn" data-digit="4">4</button>
+      <button class="keypad-btn" data-digit="5">5</button>
+      <button class="keypad-btn" data-digit="6">6</button>
+    </div>
+    <div class="keypad-row">
+      <button class="keypad-btn" data-digit="7">7</button>
+      <button class="keypad-btn" data-digit="8">8</button>
+      <button class="keypad-btn" data-digit="9">9</button>
+    </div>
+    <div class="keypad-row">
+      <button class="keypad-btn keypad-btn-func" id="keypadBackspace">⌫</button>
+      <button class="keypad-btn" data-digit="0">0</button>
+      <button class="keypad-btn keypad-btn-func keypad-btn-primary" id="keypadNext">追加</button>
+    </div>
+  </div>
+
+  <div class="table-scroll timecalc-table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-num"></th>
+          <th style="width:62px">距離</th>
+          <th style="width:96px">SPLIT</th>
+          <th style="width:80px">LAP</th>
+          <th class="col-clear" style="width:36px"></th>
+        </tr>
+      </thead>
+      <tbody id="timeCalcBody"></tbody>
+    </table>
+  </div>
+</div>
+
 
 
 <!-- ============ 日詳細ボトムシート ============ -->
@@ -1575,6 +1765,149 @@ document.getElementById('tbody').addEventListener('click', (e)=>{
 /* ==================================================
    init
 ================================================== */
+/* ==================================================
+   画面5: タイム換算(SPLIT→LAP)
+================================================== */
+let timeCalcEntries = [];      // 確定済みの入力 [{raw: '125321'}, ...]
+let timeCalcCurrentRaw = '';   // 入力中の桁
+let timeCalcEditIndex = null;  // 既存行を編集中ならそのindex、新規なら null
+
+function parseTimeToCentisec(str){
+  if(!str) return null;
+  const m = str.match(/^(\d+):(\d{1,2})\.(\d{2})$/);
+  if(!m) return null;
+  const min = parseInt(m[1]);
+  const sec = parseInt(m[2]);
+  const hh = parseInt(m[3]);
+  if(sec > 59) return null;
+  return (min * 60 + sec) * 100 + hh;
+}
+function formatCentisecToTime(totalCs){
+  if(totalCs == null || totalCs < 0) return '';
+  const hh = totalCs % 100;
+  const totalSec = Math.floor(totalCs / 100);
+  const sec = totalSec % 60;
+  const min = Math.floor(totalSec / 60);
+  return `${min}:${String(sec).padStart(2,'0')}.${String(hh).padStart(2,'0')}`;
+}
+function formatSplitInput(raw){
+  const digits = (raw || '').replace(/\D/g,'').slice(0,6);
+  if(digits.length === 0) return '';
+  const hh = digits.slice(-2).padStart(2,'0');
+  const rest = digits.slice(0, -2);
+  if(rest.length === 0) return `0:00.${hh}`;
+  const ss = rest.length <= 2 ? rest.padStart(2,'0') : rest.slice(-2);
+  const mm = rest.length <= 2 ? '0' : String(parseInt(rest.slice(0, -2)));
+  return `${mm}:${ss}.${hh}`;
+}
+
+function timeCalcInterval(){
+  return parseInt(document.getElementById('timeCalcInterval').value) || 50;
+}
+
+function buildTimeCalcRows(){
+  timeCalcEntries = [];
+  timeCalcCurrentRaw = '';
+  timeCalcEditIndex = null;
+  renderTimeCalcList();
+  updateTimeCalcCurrent();
+}
+
+function updateTimeCalcCurrent(){
+  const rowNum = (timeCalcEditIndex != null) ? timeCalcEditIndex + 1 : timeCalcEntries.length + 1;
+  const dist = timeCalcInterval() * rowNum;
+  document.getElementById('timeCalcCurrentLabel').textContent = `${rowNum} ・ ${dist}m`;
+  document.getElementById('timeCalcCurrentValue').textContent = formatSplitInput(timeCalcCurrentRaw) || '0:00.00';
+}
+
+function renderTimeCalcList(){
+  const body = document.getElementById('timeCalcBody');
+  const interval = timeCalcInterval();
+  let prevCs = 0;
+  let html = '';
+  timeCalcEntries.forEach((entry, idx) => {
+    const rowNum = idx + 1;
+    const dist = interval * rowNum;
+    const cs = parseTimeToCentisec(formatSplitInput(entry.raw));
+    const lap = cs != null ? cs - prevCs : null;
+    if(cs != null) prevCs = cs;
+    html += `<tr data-index="${idx}">
+      <td class="col-num">${rowNum}</td>
+      <td class="timecalc-dist">${dist}m</td>
+      <td class="timecalc-split-value">${formatSplitInput(entry.raw)}</td>
+      <td class="timecalc-lap-value">${lap != null && lap >= 0 ? formatCentisecToTime(lap) : (lap != null ? '―' : '')}</td>
+      <td class="col-clear"><button type="button" class="row-clear-btn timecalc-delete-btn" data-index="${idx}" aria-label="この行を削除">×</button></td>
+    </tr>`;
+  });
+  body.innerHTML = html;
+}
+
+function timeCalcCommit(){
+  if(timeCalcCurrentRaw === '') return;
+  if(timeCalcEditIndex != null){
+    timeCalcEntries[timeCalcEditIndex].raw = timeCalcCurrentRaw;
+  } else {
+    timeCalcEntries.push({ raw: timeCalcCurrentRaw });
+  }
+  timeCalcEditIndex = null;
+  timeCalcCurrentRaw = '';
+  renderTimeCalcList();
+  updateTimeCalcCurrent();
+  const scrollEl = document.querySelector('.timecalc-table-scroll');
+  scrollEl.scrollTop = scrollEl.scrollHeight;
+}
+
+document.getElementById('timeCalcOpenBtn').addEventListener('click', ()=>{
+  buildTimeCalcRows();
+  switchScreen('timecalc');
+});
+document.getElementById('timeCalcBackBtn').addEventListener('click', ()=>{
+  switchScreen('calendar');
+});
+document.getElementById('timeCalcInterval').addEventListener('change', ()=>{
+  renderTimeCalcList();
+  updateTimeCalcCurrent();
+});
+document.getElementById('timeCalcClearBtn').addEventListener('click', ()=>{
+  buildTimeCalcRows();
+});
+document.getElementById('timeCalcBody').addEventListener('click', (e)=>{
+  const delBtn = e.target.closest('.timecalc-delete-btn');
+  if(delBtn){
+    const idx = parseInt(delBtn.dataset.index);
+    timeCalcEntries.splice(idx, 1);
+    timeCalcEditIndex = null;
+    timeCalcCurrentRaw = '';
+    renderTimeCalcList();
+    updateTimeCalcCurrent();
+    return;
+  }
+  const row = e.target.closest('tr[data-index]');
+  if(!row) return;
+  timeCalcEditIndex = parseInt(row.dataset.index);
+  timeCalcCurrentRaw = timeCalcEntries[timeCalcEditIndex].raw;
+  updateTimeCalcCurrent();
+});
+document.getElementById('timeCalcKeypad').addEventListener('click', (e)=>{
+  const digitBtn = e.target.closest('.keypad-btn[data-digit]');
+  if(digitBtn){
+    if(timeCalcCurrentRaw.length >= 6) return;
+    timeCalcCurrentRaw += digitBtn.dataset.digit;
+    updateTimeCalcCurrent();
+    if(timeCalcCurrentRaw.length >= 6) timeCalcCommit();
+    return;
+  }
+  if(e.target.id === 'keypadBackspace'){
+    timeCalcCurrentRaw = timeCalcCurrentRaw.slice(0, -1);
+    updateTimeCalcCurrent();
+    return;
+  }
+  if(e.target.id === 'keypadNext'){
+    timeCalcCommit();
+    return;
+  }
+});
+
 async function init(){
   await loadFilledDates();
   renderCalendar();
