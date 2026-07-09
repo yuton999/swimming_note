@@ -98,6 +98,11 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="swimming_note" \
             PRODUCT_BUNDLE_IDENTIFIER=yuton999 \
             archive
+                        PROVISIONING_PROFILE_SPECIFIER="swimming_note" \
+            PRODUCT_BUNDLE_IDENTIFIER=yuton999 \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            archive
+
 
       - name: exportOptions.plistを作成
         run: |
