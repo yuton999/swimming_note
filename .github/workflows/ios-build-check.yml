@@ -87,22 +87,7 @@ jobs:
       - name: アーカイブを作成(署名込み)
         run: |
           cd ios/App
-          xcodebuild -project App.xcodeproj \
-            -scheme App \
-            -destination 'generic/platform=iOS' \
-            -configuration Release \
-            -archivePath $RUNNER_TEMP/App.xcarchive \
-            DEVELOPMENT_TEAM=4YX785HWJD \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
-            PROVISIONING_PROFILE_SPECIFIER="swimming_note" \
-            PRODUCT_BUNDLE_IDENTIFIER=yuton999 \
-            archive
-                        PROVISIONING_PROFILE_SPECIFIER="swimming_note" \
-            PRODUCT_BUNDLE_IDENTIFIER=yuton999 \
-            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
-            archive
-
+          xcodebuild -project App.xcodeproj -scheme App -destination 'generic/platform=iOS' -configuration Release -archivePath $RUNNER_TEMP/App.xcarchive DEVELOPMENT_TEAM=4YX785HWJD CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="Apple Distribution" PROVISIONING_PROFILE_SPECIFIER="swimming_note" PRODUCT_BUNDLE_IDENTIFIER=yuton999 CURRENT_PROJECT_VERSION=${{ github.run_number }} archive
 
       - name: exportOptions.plistを作成
         run: |
