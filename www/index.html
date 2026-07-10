@@ -826,7 +826,7 @@ input:focus, select:focus{
 <!-- ============ 画面1: カレンダー ============ -->
 <div class="screen active" id="screen-calendar">
   <div class="topbar">
-    <button class="icon-btn" id="timeCalcOpenBtn" aria-label="タイム換算">
+    <button class="icon-btn" id="timeCalcOpenBtn" aria-label="タイム計算">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l3 2M9 2h6M12 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <h1 class="title">my swimming note</h1>
@@ -871,13 +871,13 @@ input:focus, select:focus{
 </div>
 
 
-<!-- ============ 画面5: タイム換算(SPLIT→LAP) ============ -->
+<!-- ============ 画面5: タイム計算(SPLIT→LAP) ============ -->
 <div class="screen" id="screen-timecalc">
   <div class="topbar">
     <button class="icon-btn" id="timeCalcBackBtn" aria-label="戻る">
       <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <h1 class="title">タイム換算</h1>
+    <h1 class="title">タイム計算</h1>
     <div class="topbar-spacer"></div>
   </div>
 
@@ -1766,7 +1766,7 @@ document.getElementById('tbody').addEventListener('click', (e)=>{
    init
 ================================================== */
 /* ==================================================
-   画面5: タイム換算(SPLIT→LAP)
+   画面5: タイム計算(SPLIT→LAP)
 ================================================== */
 let timeCalcEntries = [];      // 確定済みの入力 [{raw: '125321'}, ...]
 let timeCalcCurrentRaw = '';   // 入力中の桁
