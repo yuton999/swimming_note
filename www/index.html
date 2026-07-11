@@ -101,6 +101,12 @@ body{
   text-align:center;
   flex:1;
 }
+.topbar-icon-group{
+  display:flex;
+  align-items:center;
+  gap:2px;
+}
+#screen-calendar .title{font-size:16.5px;}
 .save-btn{
   background:none;
   border:none;
@@ -355,6 +361,322 @@ body{
   display:flex;
   flex-direction:column;
   gap:28px;
+}
+
+/* ---- レース記録 ---- */
+.race-tabs{
+  display:flex;
+  border-bottom:1px solid var(--border);
+  padding:0 16px;
+}
+.race-tab{
+  flex:1;
+  background:none;
+  border:none;
+  padding:12px 0;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  border-bottom:2.5px solid transparent;
+  cursor:pointer;
+}
+.race-tab.active{
+  color:var(--blue);
+  border-bottom-color:var(--blue);
+}
+.race-list-item{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.race-list-item:active{background:var(--blue-soft);}
+.race-list-date{
+  font-size:11.5px;
+  color:var(--muted);
+  font-weight:600;
+}
+.race-list-main{
+  font-size:14.5px;
+  font-weight:700;
+  color:var(--navy);
+  margin-top:2px;
+}
+.race-list-sub{
+  font-size:12.5px;
+  color:var(--muted);
+  margin-top:2px;
+}
+.race-list-empty{
+  padding:60px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13.5px;
+}
+.race-best-group-title{
+  padding:14px 16px 6px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--blue);
+  background:var(--blue-soft);
+}
+.race-best-item{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+}
+.race-best-item-name{
+  font-size:13.5px;
+  color:var(--text);
+  font-weight:600;
+}
+.race-best-item-time{
+  font-size:15px;
+  font-weight:800;
+  color:var(--navy);
+}
+.race-best-item-sub{
+  font-size:11px;
+  color:var(--muted);
+  display:block;
+  margin-top:1px;
+}
+
+/* ---- レース記録フォーム ---- */
+.race-form{
+  padding:18px 16px 40px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.race-form-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.race-form-row-inline{
+  flex-direction:row;
+  gap:10px;
+}
+.race-form-row-inline > div{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.race-form-label{
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--muted);
+}
+.race-form-label-sub{
+  font-weight:500;
+  color:var(--muted);
+  margin-left:4px;
+}
+.race-form-input, .race-form-select{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:14.5px;
+  color:var(--text);
+  background:#fff;
+  font-family:inherit;
+}
+.race-time-current{
+  border-top:none;
+  border-bottom:none;
+  background:var(--blue-soft);
+  border-radius:10px;
+  justify-content:center;
+  padding:12px;
+}
+.race-time-current .timecalc-current-value{font-size:26px;}
+.race-time-keypad{
+  border:none;
+  background:none;
+  padding:8px 0 0;
+}
+.race-lap-hint{
+  font-size:11.5px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:2px;
+}
+.race-lap-table-head{
+  display:grid;
+  grid-template-columns:56px 1fr 1fr;
+  padding:8px 4px 4px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+}
+.race-lap-list{
+  display:flex;
+  flex-direction:column;
+}
+.race-lap-row{
+  display:grid;
+  grid-template-columns:56px 1fr 1fr;
+  align-items:center;
+  padding:9px 4px;
+  border-bottom:1px solid var(--border);
+  font-size:13.5px;
+  cursor:pointer;
+}
+.race-lap-row:active{background:var(--blue-soft);}
+.race-lap-row-num{color:var(--muted);font-weight:600;}
+.race-lap-row-split{font-weight:700;color:var(--text);}
+.race-lap-row-time{font-weight:700;color:var(--navy);}
+.race-type-toggle{
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+.race-type-btn{
+  flex:1;
+  background:#fff;
+  border:none;
+  padding:11px 0;
+  font-size:13px;
+  font-weight:700;
+  color:var(--muted);
+  cursor:pointer;
+}
+.race-type-btn.active{
+  background:var(--blue);
+  color:#fff;
+}
+.race-type-hint{
+  font-size:11.5px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.6;
+}
+.race-save-another-btn{
+  background:var(--blue-soft);
+  color:var(--blue);
+  border:none;
+  border-radius:10px;
+  padding:12px;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+}
+.race-save-another-btn:active{opacity:.8;}
+.race-schedule-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.race-schedule-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  background:#F7F8FA;
+  border-radius:8px;
+  font-size:13px;
+}
+.race-schedule-row-time{
+  font-weight:700;
+  color:var(--navy);
+  width:48px;
+  flex-shrink:0;
+}
+.race-schedule-row-content{flex:1;color:var(--text);}
+.race-schedule-row-del{
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:16px;
+  cursor:pointer;
+  padding:2px 6px;
+}
+.race-schedule-add{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+.race-schedule-time-input{width:110px;flex-shrink:0;}
+.race-schedule-add-btn{
+  background:var(--blue);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:0 16px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.race-delete-btn{
+  background:none;
+  border:1px solid #E0574C;
+  color:#E0574C;
+  border-radius:10px;
+  padding:12px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+.race-delete-btn:active{background:#FDEEEC;}
+.meet-events-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.meet-event-add-btn{
+  background:var(--blue);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:8px 14px;
+  font-size:12.5px;
+  font-weight:700;
+  cursor:pointer;
+}
+.meet-events-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:10px;
+}
+.meet-event-item{
+  padding:12px 14px;
+  background:#F7F8FA;
+  border-radius:10px;
+  cursor:pointer;
+}
+.meet-event-item:active{background:var(--blue-soft);}
+.meet-event-item-main{
+  font-size:14px;
+  font-weight:700;
+  color:var(--navy);
+}
+.meet-event-round-badge{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:6px;
+  margin-left:6px;
+  background:var(--blue-soft);
+  color:var(--blue);
+}
+.meet-events-empty{
+  padding:24px 10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12.5px;
+}
+.cal-cell .dot-race{
+  width:5px;height:5px;border-radius:50%;
+  background:#E0A800;
+  display:inline-block;
+  margin-left:2px;
 }
 .backup-section-title{
   font-size:14.5px;
@@ -830,9 +1152,14 @@ input:focus, select:focus{
       <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l3 2M9 2h6M12 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <h1 class="title">my swimming note</h1>
-    <button class="icon-btn" id="backupOpenBtn" aria-label="データのバックアップ">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 12l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
+    <div class="topbar-icon-group">
+      <button class="icon-btn" id="raceOpenBtn" aria-label="レース記録">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8M12 17v4M6 4h12v3a6 6 0 0 1-12 0V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 5H3v1a4 4 0 0 0 4 4M18 5h3v1a4 4 0 0 1-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="icon-btn" id="backupOpenBtn" aria-label="データのバックアップ">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 12l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
   </div>
   <div class="cal-header">
     <button class="cal-arrow" id="prevMonthBtn">‹</button>
@@ -938,6 +1265,162 @@ input:focus, select:focus{
   </div>
 </div>
 
+
+<!-- ============ 画面6: レース記録 ============ -->
+<div class="screen" id="screen-races">
+  <div class="topbar">
+    <button class="icon-btn" id="racesBackBtn" aria-label="戻る">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <h1 class="title">レース記録</h1>
+    <button class="icon-btn" id="raceAddBtn" aria-label="大会を追加">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="race-tabs">
+    <button class="race-tab active" id="raceTabList" data-tab="list">一覧</button>
+    <button class="race-tab" id="raceTabBest" data-tab="best">ベストタイム</button>
+  </div>
+
+  <div class="table-scroll" id="raceListScroll">
+    <div id="raceListContent"></div>
+  </div>
+  <div class="table-scroll" id="raceBestScroll" style="display:none;">
+    <div id="raceBestContent"></div>
+  </div>
+</div>
+
+
+<!-- ============ 画面7: 大会の編集(種目一覧) ============ -->
+<div class="screen" id="screen-meet-edit">
+  <div class="topbar">
+    <button class="icon-btn" id="meetEditBackBtn" aria-label="戻る">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <h1 class="title">大会記録</h1>
+    <button class="save-btn" id="meetSaveBtn">保存</button>
+  </div>
+
+  <div class="table-scroll">
+    <div class="race-form">
+
+      <div class="race-form-row">
+        <div class="race-type-toggle">
+          <button type="button" class="race-type-btn active" id="raceTypeRace" data-type="race">大会記録</button>
+          <button type="button" class="race-type-btn" id="raceTypeBest" data-type="best">自己ベストのみ登録</button>
+        </div>
+        <div class="race-type-hint" id="raceTypeHint">大会名・日付・当日のスケジュールを記録し、その中に何種目でも追加できます。</div>
+      </div>
+
+      <div class="race-form-row" id="raceDateRow">
+        <label class="race-form-label">日付</label>
+        <input type="date" id="meetDate" class="race-form-input">
+      </div>
+
+      <div class="race-form-row" id="raceCompetitionRow">
+        <label class="race-form-label">大会名</label>
+        <input type="text" id="meetCompetition" class="race-form-input" placeholder="例: 市民大会(空欄でも可)">
+      </div>
+
+      <div class="race-form-row">
+        <label class="race-form-label">コース</label>
+        <select id="meetCourse" class="race-form-select">
+          <option value="LCM">長水路</option>
+          <option value="SCM">短水路</option>
+        </select>
+      </div>
+
+      <div class="race-form-row" id="meetEventsSection">
+        <div class="meet-events-header">
+          <label class="race-form-label">種目<span class="race-form-label-sub" id="meetEventsCountLabel"></span></label>
+          <button type="button" class="meet-event-add-btn" id="meetEventAddBtn">+ 種目を追加</button>
+        </div>
+        <div id="meetEventsList" class="meet-events-list"></div>
+      </div>
+
+      <div class="race-form-row">
+        <button type="button" class="race-delete-btn" id="meetDeleteBtn">この大会記録を削除</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 画面8: 種目の追加・編集 ============ -->
+<div class="screen" id="screen-event-edit">
+  <div class="topbar">
+    <button class="icon-btn" id="eventEditBackBtn" aria-label="戻る">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <h1 class="title">種目の記録</h1>
+    <button class="save-btn" id="eventSaveBtn">保存</button>
+  </div>
+
+  <div class="table-scroll">
+    <div class="race-form">
+
+      <div class="race-form-row race-form-row-inline">
+        <div>
+          <label class="race-form-label">種目</label>
+          <select id="raceStroke" class="race-form-select"></select>
+        </div>
+        <div>
+          <label class="race-form-label">距離</label>
+          <select id="raceDistance" class="race-form-select"></select>
+        </div>
+      </div>
+
+      <div class="race-form-row" id="raceRoundRow">
+        <label class="race-form-label">ラウンド</label>
+        <select id="raceRound" class="race-form-select">
+          <option value="prelim">予選</option>
+          <option value="final">決勝</option>
+          <option value="timed_final">タイム決勝</option>
+        </select>
+      </div>
+
+      <div class="race-form-row">
+        <label class="race-form-label">タイム</label>
+        <div class="timecalc-current race-time-current">
+          <span class="timecalc-current-value" id="raceTimeValue">0:00.00</span>
+        </div>
+        <div class="timecalc-keypad race-time-keypad" id="raceTimeKeypad">
+          <div class="keypad-row">
+            <button class="keypad-btn" data-digit="1">1</button>
+            <button class="keypad-btn" data-digit="2">2</button>
+            <button class="keypad-btn" data-digit="3">3</button>
+          </div>
+          <div class="keypad-row">
+            <button class="keypad-btn" data-digit="4">4</button>
+            <button class="keypad-btn" data-digit="5">5</button>
+            <button class="keypad-btn" data-digit="6">6</button>
+          </div>
+          <div class="keypad-row">
+            <button class="keypad-btn" data-digit="7">7</button>
+            <button class="keypad-btn" data-digit="8">8</button>
+            <button class="keypad-btn" data-digit="9">9</button>
+          </div>
+          <div class="keypad-row">
+            <button class="keypad-btn keypad-btn-func" id="raceTimeBackspace">⌫</button>
+            <button class="keypad-btn" data-digit="0">0</button>
+            <button class="keypad-btn keypad-btn-func" id="raceTimeClear">クリア</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="race-form-row">
+        <button type="button" class="race-save-another-btn" id="raceSaveAnotherBtn">保存してもう1種目追加</button>
+      </div>
+
+      <div class="race-form-row">
+        <button type="button" class="race-delete-btn" id="raceDeleteBtn">この種目を削除</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <!-- ============ 日詳細ボトムシート ============ -->
@@ -1182,7 +1665,8 @@ async function renderCalendar(){
     const key = dateKey(calYear, calMonth, d);
     const cell = document.createElement('button');
     cell.className = 'cal-cell' + (key === tKey ? ' today' : '');
-    cell.innerHTML = `<span>${d}</span>` + (filledDates.has(key) ? '<span class="dot"></span>' : '');
+    const dots = (filledDates.has(key) ? '<span class="dot"></span>' : '') + (raceDates.has(key) ? '<span class="dot-race"></span>' : '');
+    cell.innerHTML = `<span>${d}</span>` + dots;
     cell.addEventListener('click', ()=> openDay(key));
     grid.appendChild(cell);
   }
@@ -1396,10 +1880,14 @@ async function renderDayScreen(){
     }
   }catch(e){ rows = null; }
 
+  await loadRaceRecords();
+  const dayRaces = (raceRecordsCache || []).filter(r => r.date === selectedDate);
+
   const hasRows = rows && rows.some(r => Object.values(r).some(v => v !== '' && v != null));
   const hasMemo = memo && memo.trim() !== '';
   const hasRating = condition !== '' || effort !== '';
-  const hasContent = hasRows || hasMemo || hasRating;
+  const hasRaces = dayRaces.length > 0;
+  const hasContent = hasRows || hasMemo || hasRating || hasRaces;
 
   if(!hasContent){
     content.innerHTML = `
@@ -1442,16 +1930,38 @@ async function renderDayScreen(){
         <div class="day-memo-view-text">${escapeHtml(memo)}</div>
       </div>` : '';
 
+    const racesHtml = hasRaces ? `
+      <div class="day-memo-view">
+        <div class="day-memo-view-label">レース記録</div>
+        ${dayRaces.map(m => {
+          const eventsSummary = (m.events||[]).filter(ev => ev.stroke && ev.distance).map(ev =>
+            `${raceEventLabel(ev)} ${formatSplitInput(ev.timeRaw) || '--:--'}(${RACE_ROUND_LABELS[ev.round]||''})`
+          ).join('<br>');
+          return `
+          <div class="race-list-item" data-id="${m.id}" style="padding:10px 0;cursor:pointer;">
+            <div class="race-list-main">${escapeHtml(m.competition || '大会記録')}</div>
+            ${eventsSummary ? `<div class="race-list-sub">${eventsSummary}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>` : '';
+
     content.innerHTML = `
       <div class="day-summary">
-        <div class="day-summary-total"><span class="n">${total.toLocaleString('ja-JP')}</span><span class="u">m</span></div>
+        ${hasRows ? `<div class="day-summary-total"><span class="n">${total.toLocaleString('ja-JP')}</span><span class="u">m</span></div>` : ''}
         ${rowsHtml}
         ${ratingHtml}
         ${memoHtml}
+        ${racesHtml}
       </div>
       <div class="day-edit-btn-wrap">
         <button class="day-edit-btn" id="dayEditBtn">編集</button>
       </div>`;
+
+    if(hasRaces){
+      content.querySelectorAll('.race-list-item').forEach(el => {
+        el.addEventListener('click', () => { closeDaySheet(); openMeetEdit(el.dataset.id); });
+      });
+    }
   }
   document.getElementById('dayEditBtn').addEventListener('click', openEdit);
 }
@@ -1908,8 +2418,427 @@ document.getElementById('timeCalcKeypad').addEventListener('click', (e)=>{
   }
 });
 
+/* ==================================================
+   画面6・7・8: レース記録(大会 > 種目)
+================================================== */
+let raceRecordsCache = null;   // 大会(Meet)の配列
+let raceDates = new Set();
+let meetEditingId = null;      // 編集中の大会ID(null = 新規)
+let meetEditingType = 'race';  // 'race' | 'best'
+let eventEditingId = null;     // 編集中の種目ID(null = 新規)
+let eventTimeRaw = '';
+
+const RACE_COURSE_LABELS = { LCM: '長水路', SCM: '短水路' };
+const RACE_ROUND_LABELS = { prelim: '予選', final: '決勝', timed_final: 'タイム決勝' };
+const RACE_STROKE_OPTIONS = ['fly', 'ba', 'br', 'fr', 'IM'];
+const RACE_DISTANCE_BY_STROKE = {
+  fr:  ['50','100','200','400','800','1500'],
+  IM:  ['200','400'],
+  ba:  ['50','100','200'],
+  br:  ['50','100','200'],
+  fly: ['50','100','200']
+};
+
+function makeId(prefix){
+  return prefix + '_' + Date.now() + '_' + Math.floor(Math.random()*10000);
+}
+
+/* ---- データ読み込み・保存(旧形式からの自動移行つき) ---- */
+async function loadRaceRecords(){
+  if(raceRecordsCache) return raceRecordsCache;
+  try{
+    const res = await window.storage.get('raceRecords');
+    const raw = (res && res.value) ? JSON.parse(res.value) : [];
+    raceRecordsCache = raw.map(migrateMeetRecord);
+  }catch(e){
+    raceRecordsCache = [];
+  }
+  updateRaceDatesSet();
+  return raceRecordsCache;
+}
+function migrateMeetRecord(item){
+  // すでに新形式(events配列あり)ならそのまま
+  if(item && Array.isArray(item.events)) return item;
+  // 旧形式(1件=1種目)を、大会1件+種目1件に変換
+  return {
+    id: item.id || makeId('meet'),
+    type: item.type || 'race',
+    date: item.date || '',
+    competition: item.competition || '',
+    course: item.course || 'LCM',
+    events: [{
+      id: makeId('event'),
+      stroke: item.stroke,
+      distance: item.distance,
+      round: 'final',
+      timeRaw: item.timeRaw || '',
+      laps: item.laps || []
+    }]
+  };
+}
+async function saveRaceRecordsToStorage(){
+  await window.storage.set('raceRecords', JSON.stringify(raceRecordsCache));
+  updateRaceDatesSet();
+}
+function updateRaceDatesSet(){
+  raceDates = new Set((raceRecordsCache || []).filter(m => m.date).map(m => m.date));
+}
+function raceEventLabel(ev){
+  const strokeLabel = STROKE_LABELS[ev.stroke] || ev.stroke || '';
+  return `${strokeLabel} ${ev.distance}m`;
+}
+function findMeet(id){
+  return (raceRecordsCache || []).find(m => m.id === id);
+}
+
+/* ---- 画面6: 一覧・ベストタイム ---- */
+async function openRaces(){
+  await loadRaceRecords();
+  switchScreen('races');
+  renderRaceList();
+  renderRaceBest();
+}
+
+function renderRaceList(){
+  const el = document.getElementById('raceListContent');
+  const meets = [...(raceRecordsCache || [])].filter(m => m.date && m.type !== 'best').sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  if(meets.length === 0){
+    el.innerHTML = `<div class="race-list-empty">まだ大会記録がありません。<br>右上の「+」から追加できます。</div>`;
+    return;
+  }
+  el.innerHTML = meets.map(m => {
+    const eventCount = (m.events||[]).filter(ev => ev.stroke && ev.distance).length;
+    const eventsSummary = (m.events||[]).filter(ev => ev.stroke && ev.distance).slice(0,3).map(ev =>
+      `${raceEventLabel(ev)} ${formatSplitInput(ev.timeRaw) || '--:--'}(${RACE_ROUND_LABELS[ev.round]||''})`
+    ).join(' ・ ');
+    const sub = [RACE_COURSE_LABELS[m.course] || '', m.competition || ''].filter(Boolean).join(' ・ ');
+    return `<div class="race-list-item" data-id="${m.id}">
+      <div class="race-list-date">${m.date || ''}</div>
+      <div class="race-list-main">${sub || '(大会名未設定)'}</div>
+      <div class="race-list-sub">${eventCount}種目${eventsSummary ? ' ・ ' + eventsSummary : ''}${eventCount > 3 ? ' ...' : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRaceBest(){
+  const el = document.getElementById('raceBestContent');
+  const meets = raceRecordsCache || [];
+  const allEvents = [];
+  meets.forEach(m => {
+    (m.events||[]).forEach(ev => {
+      if(!ev.stroke || !ev.distance || !ev.timeRaw) return;
+      allEvents.push({ ...ev, course: m.course, date: m.date, competition: m.competition });
+    });
+  });
+  if(allEvents.length === 0){
+    el.innerHTML = `<div class="race-list-empty">レース記録が追加されると、<br>ここにベストタイムが表示されます。</div>`;
+    return;
+  }
+  const groups = { LCM: {}, SCM: {} };
+  allEvents.forEach(ev => {
+    const course = ev.course === 'SCM' ? 'SCM' : 'LCM';
+    const key = `${ev.stroke}_${ev.distance}`;
+    const cs = parseTimeToCentisec(formatSplitInput(ev.timeRaw));
+    if(cs == null) return;
+    const existing = groups[course][key];
+    if(!existing || cs < existing.cs){
+      groups[course][key] = { cs, ev };
+    }
+  });
+
+  let html = '';
+  ['LCM','SCM'].forEach(course => {
+    const entries = Object.values(groups[course]);
+    if(entries.length === 0) return;
+    entries.sort((a,b) => {
+      const da = parseInt(a.ev.distance), db = parseInt(b.ev.distance);
+      if(da !== db) return da - db;
+      return (a.ev.stroke||'').localeCompare(b.ev.stroke||'');
+    });
+    html += `<div class="race-best-group-title">${RACE_COURSE_LABELS[course]}</div>`;
+    entries.forEach(({cs, ev}) => {
+      const sub = [ev.date, ev.competition].filter(Boolean).join(' ・ ');
+      html += `<div class="race-best-item">
+        <span class="race-best-item-name">${raceEventLabel(ev)}${sub ? `<span class="race-best-item-sub">${sub}</span>` : ''}</span>
+        <span class="race-best-item-time">${formatCentisecToTime(cs)}</span>
+      </div>`;
+    });
+  });
+  if(html === ''){
+    html = `<div class="race-list-empty">タイムが入力された記録がまだありません。</div>`;
+  }
+  el.innerHTML = html;
+}
+
+document.getElementById('raceOpenBtn').addEventListener('click', openRaces);
+document.getElementById('racesBackBtn').addEventListener('click', ()=>{
+  switchScreen('calendar');
+  renderCalendar();
+});
+document.getElementById('raceTabList').addEventListener('click', ()=>{
+  document.getElementById('raceTabList').classList.add('active');
+  document.getElementById('raceTabBest').classList.remove('active');
+  document.getElementById('raceListScroll').style.display = '';
+  document.getElementById('raceBestScroll').style.display = 'none';
+});
+document.getElementById('raceTabBest').addEventListener('click', ()=>{
+  document.getElementById('raceTabBest').classList.add('active');
+  document.getElementById('raceTabList').classList.remove('active');
+  document.getElementById('raceBestScroll').style.display = '';
+  document.getElementById('raceListScroll').style.display = 'none';
+});
+document.getElementById('raceListContent').addEventListener('click', (e)=>{
+  const item = e.target.closest('.race-list-item');
+  if(!item) return;
+  openMeetEdit(item.dataset.id);
+});
+document.getElementById('raceAddBtn').addEventListener('click', ()=> openMeetEdit(null));
+
+/* ---- 画面7: 大会の編集(種目一覧) ---- */
+function setMeetType(type){
+  meetEditingType = type;
+  document.getElementById('raceTypeRace').classList.toggle('active', type === 'race');
+  document.getElementById('raceTypeBest').classList.toggle('active', type === 'best');
+  const isBest = type === 'best';
+  document.getElementById('raceDateRow').style.display = isBest ? 'none' : '';
+  document.getElementById('raceCompetitionRow').style.display = isBest ? 'none' : '';
+  document.getElementById('raceTypeHint').textContent = isBest
+    ? 'すでに持っている自己ベストを、大会情報なしで登録します。'
+    : '大会名・日付を記録し、その中に何種目でも追加できます。';
+}
+document.getElementById('raceTypeRace').addEventListener('click', ()=> setMeetType('race'));
+document.getElementById('raceTypeBest').addEventListener('click', ()=> setMeetType('best'));
+
+function renderMeetEventsList(){
+  const meet = meetEditingId ? findMeet(meetEditingId) : null;
+  const events = meet ? (meet.events || []) : [];
+  const el = document.getElementById('meetEventsList');
+  const countLabel = document.getElementById('meetEventsCountLabel');
+  countLabel.textContent = events.length ? `(${events.length}種目)` : '';
+  if(events.length === 0){
+    el.innerHTML = `<div class="meet-events-empty">まだ種目が追加されていません。「+ 種目を追加」から登録してください。</div>`;
+    return;
+  }
+  el.innerHTML = events.map(ev => {
+    const timeStr = formatSplitInput(ev.timeRaw) || '--:--';
+    return `<div class="meet-event-item" data-id="${ev.id}">
+      <div class="meet-event-item-main">${raceEventLabel(ev)} ${timeStr}${ev.round ? `<span class="meet-event-round-badge">${RACE_ROUND_LABELS[ev.round]||''}</span>` : ''}</div>
+    </div>`;
+  }).join('');
+}
+document.getElementById('meetEventsList').addEventListener('click', (e)=>{
+  const item = e.target.closest('.meet-event-item');
+  if(!item) return;
+  openEventEdit(meetEditingId, item.dataset.id);
+});
+
+async function openMeetEdit(id, presetType){
+  await loadRaceRecords();
+  meetEditingId = id;
+  const meet = id ? findMeet(id) : null;
+
+  meetScheduleEntries = meet && meet.schedule ? meet.schedule.map(s => ({...s})) : [];
+
+  document.getElementById('meetDate').value = meet ? (meet.date || '') : todayKey();
+  document.getElementById('meetCompetition').value = meet ? (meet.competition || '') : '';
+  document.getElementById('meetCourse').value = meet ? (meet.course || 'LCM') : 'LCM';
+  setMeetType(meet ? (meet.type || 'race') : (presetType || 'race'));
+
+  // 新規大会の場合、種目を1つも登録していない状態でも一覧に表示できるよう、
+  // 保存前に一時的な大会オブジェクトをキャッシュに積んでおく(種目追加時に使う)
+  if(!meet){
+    const tempMeet = {
+      id: meetEditingId = makeId('meet'),
+      type: presetType || 'race',
+      date: document.getElementById('meetDate').value,
+      competition: '',
+      course: 'LCM',
+      events: []
+    };
+    raceRecordsCache.push(tempMeet);
+  }
+
+  renderMeetEventsList();
+  document.getElementById('meetDeleteBtn').style.display = (meet) ? '' : 'none';
+
+  switchScreen('meet-edit');
+}
+
+function syncMeetFieldsToCache(){
+  const meet = findMeet(meetEditingId);
+  if(!meet) return;
+  meet.type = meetEditingType;
+  meet.date = meetEditingType === 'best' ? '' : document.getElementById('meetDate').value;
+  meet.competition = meetEditingType === 'best' ? '' : document.getElementById('meetCompetition').value.trim();
+  meet.course = document.getElementById('meetCourse').value;
+}
+
+document.getElementById('meetEditBackBtn').addEventListener('click', async ()=>{
+  // 種目が1つも無い新規大会は保存せず破棄する
+  const meet = findMeet(meetEditingId);
+  if(meet && (!meet.events || meet.events.length === 0)){
+    raceRecordsCache = raceRecordsCache.filter(m => m.id !== meetEditingId);
+  }
+  switchScreen('races');
+  renderRaceList();
+  renderRaceBest();
+});
+
+document.getElementById('meetEventAddBtn').addEventListener('click', ()=>{
+  syncMeetFieldsToCache();
+  openEventEdit(meetEditingId, null);
+});
+
+document.getElementById('meetSaveBtn').addEventListener('click', async ()=>{
+  const meet = findMeet(meetEditingId);
+  if(meetEditingType === 'race' && !document.getElementById('meetDate').value){
+    showToast('日付を入力してください');
+    return;
+  }
+  if(!meet || !meet.events || meet.events.length === 0){
+    showToast('種目を1つ以上追加してください');
+    return;
+  }
+  syncMeetFieldsToCache();
+  await saveRaceRecordsToStorage();
+  showToast('保存しました');
+  switchScreen('races');
+  renderRaceList();
+  renderRaceBest();
+  renderCalendar();
+});
+
+document.getElementById('meetDeleteBtn').addEventListener('click', async ()=>{
+  if(!meetEditingId) return;
+  raceRecordsCache = raceRecordsCache.filter(m => m.id !== meetEditingId);
+  await saveRaceRecordsToStorage();
+  showToast('削除しました');
+  switchScreen('races');
+  renderRaceList();
+  renderRaceBest();
+  renderCalendar();
+});
+
+/* ---- 画面8: 種目の追加・編集 ---- */
+function populateRaceSelects(){
+  const strokeSel = document.getElementById('raceStroke');
+  strokeSel.innerHTML = RACE_STROKE_OPTIONS.map(s => `<option value="${s}">${STROKE_LABELS[s]||s}</option>`).join('');
+  updateRaceDistanceOptions();
+}
+function updateRaceDistanceOptions(){
+  const stroke = document.getElementById('raceStroke').value;
+  const distSel = document.getElementById('raceDistance');
+  const prevValue = distSel.value;
+  const options = RACE_DISTANCE_BY_STROKE[stroke] || RACE_DISTANCE_BY_STROKE.fr;
+  distSel.innerHTML = options.map(d => `<option value="${d}">${d}m</option>`).join('');
+  if(options.includes(prevValue)) distSel.value = prevValue;
+}
+document.getElementById('raceStroke').addEventListener('change', updateRaceDistanceOptions);
+
+function updateRaceTimeDisplay(){
+  document.getElementById('raceTimeValue').textContent = formatSplitInput(eventTimeRaw) || '0:00.00';
+}
+
+async function openEventEdit(meetId, eventId){
+  populateRaceSelects();
+  meetEditingId = meetId;
+  eventEditingId = eventId;
+  const meet = findMeet(meetId);
+  const ev = eventId ? (meet.events || []).find(e => e.id === eventId) : null;
+
+  document.getElementById('raceStroke').value = ev ? (ev.stroke || RACE_STROKE_OPTIONS[0]) : RACE_STROKE_OPTIONS[0];
+  updateRaceDistanceOptions();
+  if(ev && ev.distance) document.getElementById('raceDistance').value = ev.distance;
+  document.getElementById('raceRound').value = ev ? (ev.round || 'final') : 'final';
+  document.getElementById('raceRoundRow').style.display = (meet && meet.type === 'best') ? 'none' : '';
+
+  eventTimeRaw = ev ? (ev.timeRaw || '') : '';
+
+  updateRaceTimeDisplay();
+
+  document.getElementById('raceDeleteBtn').style.display = eventId ? '' : 'none';
+
+  switchScreen('event-edit');
+}
+
+document.getElementById('eventEditBackBtn').addEventListener('click', ()=>{
+  switchScreen('meet-edit');
+  renderMeetEventsList();
+});
+
+document.getElementById('raceTimeKeypad').addEventListener('click', (e)=>{
+  const digitBtn = e.target.closest('.keypad-btn[data-digit]');
+  if(digitBtn){
+    if(eventTimeRaw.length >= 6) return;
+    eventTimeRaw += digitBtn.dataset.digit;
+    updateRaceTimeDisplay();
+    return;
+  }
+  if(e.target.id === 'raceTimeBackspace'){
+    eventTimeRaw = eventTimeRaw.slice(0,-1);
+    updateRaceTimeDisplay();
+    return;
+  }
+  if(e.target.id === 'raceTimeClear'){
+    eventTimeRaw = '';
+    updateRaceTimeDisplay();
+    return;
+  }
+});
+
+function buildEventFromForm(){
+  const meet = findMeet(meetEditingId);
+  const isBest = meet && meet.type === 'best';
+  return {
+    id: eventEditingId || makeId('event'),
+    stroke: document.getElementById('raceStroke').value,
+    distance: document.getElementById('raceDistance').value,
+    round: isBest ? '' : document.getElementById('raceRound').value,
+    timeRaw: eventTimeRaw
+  };
+}
+function commitEventToMeet(ev){
+  const meet = findMeet(meetEditingId);
+  if(!meet) return;
+  if(!meet.events) meet.events = [];
+  const idx = meet.events.findIndex(e => e.id === ev.id);
+  if(idx >= 0) meet.events[idx] = ev;
+  else meet.events.push(ev);
+}
+
+document.getElementById('eventSaveBtn').addEventListener('click', ()=>{
+  const ev = buildEventFromForm();
+  commitEventToMeet(ev);
+  showToast('保存しました');
+  switchScreen('meet-edit');
+  renderMeetEventsList();
+});
+
+document.getElementById('raceSaveAnotherBtn').addEventListener('click', ()=>{
+  const ev = buildEventFromForm();
+  commitEventToMeet(ev);
+
+  eventEditingId = null;
+  eventTimeRaw = '';
+  updateRaceTimeDisplay();
+  document.getElementById('raceDeleteBtn').style.display = 'none';
+  showToast('保存しました。続けて種目を追加できます');
+});
+
+document.getElementById('raceDeleteBtn').addEventListener('click', ()=>{
+  if(!eventEditingId) return;
+  const meet = findMeet(meetEditingId);
+  if(meet){
+    meet.events = (meet.events || []).filter(e => e.id !== eventEditingId);
+  }
+  showToast('削除しました');
+  switchScreen('meet-edit');
+  renderMeetEventsList();
+});
+
 async function init(){
   await loadFilledDates();
+  await loadRaceRecords();
   renderCalendar();
 }
 init();
